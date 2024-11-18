@@ -206,7 +206,7 @@ if ($conn->connect_error) {
             <label for="location">學校所在區域：</label>
             <select name="location" id="location" required>
                 <option value="北部">北</option>
-                <option value="中部">中部</option>
+                <option value="中部">中</option>
                 <option value="南部">南部</option>
                 <option value="東部">東部</option>
                 <option value="離島">離島</option>
