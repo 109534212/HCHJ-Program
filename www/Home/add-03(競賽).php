@@ -12,6 +12,7 @@
   $result = $conn->query($sql);
   if (!$result) {
     die($conn->error);
+    
   }
 
   // 如果有新增成功
