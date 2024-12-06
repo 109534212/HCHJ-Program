@@ -9,9 +9,9 @@
 <body>
     <div class="container">
         <h1>填寫統測成績</h1>
-        <form action="submit_scores.php" method="POST">
-            <label for="user_id">學生 ID:</label>
-            <input type="number" id="user_id" name="user_id" required><br><br>
+        <form action="optionalrecommend2.php" method="POST">
+            <label for="user">學生 ID:</label>
+            <input type="number" id="user" name="user" required><br><br>
 
             <label for="subject_name">科目:</label>
             <select id="subject_name" name="subject_name" required>
