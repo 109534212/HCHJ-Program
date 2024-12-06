@@ -23,6 +23,36 @@ if (!isset($_SESSION['user'])) {
                   </script>");
     exit();
 }
+
+
+$servername = "127.0.0.1"; 
+$username = "HCHJ"; 
+$password = "xx435kKHq"; 
+$dbname = "HCHJ"; 
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("連線失敗" . $conn->connect_error);
+}
+
+// SQL 查詢語句，用來獲取學校資訊
+$sql = "SELECT school_id, school_name, location, inform, link FROM School";
+$result = $conn->query($sql);
+
+if ($result && $result->num_rows > 0) {
+    // 將每筆資料放入資料陣列中
+    $schools = array();
+    while ($row = $result->fetch_assoc()) {
+        $schools[] = $row;
+    }
+    $result->free();
+} else {
+    echo "<p>目前無學校資料顯示。</p>";
+}
+
+// 關閉資料庫連線
+$conn->close();
 ?>
 
 <!doctype html>
@@ -30,7 +60,7 @@ if (!isset($_SESSION['user'])) {
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>新增二技校園</title>
+        <title>編輯</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -44,60 +74,7 @@ if (!isset($_SESSION['user'])) {
 		<link rel="stylesheet" href="assets/css/tiny-slider.css">
 		<link rel="stylesheet" href="assets/css/glightbox.min.css">
 		<link rel="stylesheet" href="assets/css/main.css">
-
-        <style>
-    /* 設定容器和表單樣式 */
-    .form-container {
-        text-align: center;
-        width: 100%;
-        max-width: 500px; /* 設定最大寬度 */
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    /* 調整標籤樣式 */
-    label {
-        display: block;
-        text-align: left;
-        font-weight: bold;
-        font-size: 1.2em; /* 增加字型大小 */
-        margin-top: 10px;
-    }
-
-    /* 設定 select、input 和 textarea 的樣式與大小 */
-    select, input[type="text"], textarea, input[type="file"], input[type="date"] {
-        width: 100%;
-        max-width: 500px; /* 設定欄位最大寬度 */
-        margin-top: 10px;
-        padding: 8px;
-        font-size: 1em;
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-    }
-
-    /* 設定按鈕樣式 */
-    button {
-        font-size: 1.2em; /* 增加按鈕字型大小 */
-        padding: 10px 20px;
-    }
-</style>
     </head>
-    <?php
-$servername = "127.0.0.1"; //伺服器ip或本地端localhost
-$username = "HCHJ"; //登入帳號
-$password = "xx435kKHq"; //密碼
-$dbname = "HCHJ"; //資料表名稱
-
-
-//建立連線
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-//確認連線成功或失敗
-if ($conn->connect_error) {
-    die("連線失敗" . $conn->connect_error);
-}
-?>
-
     <body>
 
         <!-- ========================= preloader start ========================= -->
@@ -118,6 +95,7 @@ if ($conn->connect_error) {
                 </div>
             </div>
         <!-- preloader end -->
+
         <!-- ========================= header start ========================= -->
         <header class="header navbar-area">
             <div class="container">
@@ -138,13 +116,13 @@ if ($conn->connect_error) {
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ml-auto">                                    
                                 <li class="nav-item">
-                                    <li class="nav-item"><a href="index-03.php">首頁</a></li>
-                                    </li>
+                                        <a class="page-scroll" href="index-03.php" >首頁</a>
+                                    </li>   
                                     <li class="nav-item">
                                         <a class="nav-item dd-menu">個人資料</a>           
                                         <ul class="sub-menu">
-                                        <li class="nav-item"><a href="contact-03(個人資料).php">查看個人資料</a></li>
-                                        <li class="nav-item"><a href="changepassword-01.html(修改密碼)">修改密碼</a></li>
+                                        <li class="nav-item"><a href="contact02-3.php">查看個人資料</a></li>
+                                        <li class="nav-item"><a href="/~HCHJ/changepassword.html">修改密碼</a></li>
                                         </ul>
                                     </li>       
                                     <li class="nav-item">
@@ -152,15 +130,15 @@ if ($conn->connect_error) {
                                         <ul class="sub-menu">
                                         <li class="nav-item"><a href="Schoolnetwork1.php">首頁</a></li>
                                         <li class="nav-item"><a href="AddSchool1.php">新增校園</a></li>
-                                        <li class="nav-item"><a href="portfolio delete-03(編輯).php">編輯資訊</a></li>
+                                        <li class="nav-item"><a href="SchoolEdit1.php">編輯資訊</a></li>                                        
                                         </ul>
                                     </li>        
                                     <li class="nav-item">
                                         <a class="nav-item dd-menu" >比賽資訊</a>           
                                         <ul class="sub-menu">
-                                        <li class="nav-item"><a href="blog-03(競賽).php">查看</a></li>
-                                            <li class="nav-item"><a href="create-03.php">新增</a></li>
-                                            <li class="nav-item"><a href="delete-03.php">編輯</a></li>
+                                        <li class="nav-item"><a href="Contestblog1.php">查看</a></li>
+                                            <li class="nav-item"><a href="AddContest1.php">新增</a></li>
+                                            <li class="nav-item"><a href="ContestEdin1.php">編輯</a></li>
                                         </ul>
                                     </li>              
                                     <li class="nav-item">
@@ -168,7 +146,10 @@ if ($conn->connect_error) {
                                     </li>              
                                     <li class="nav-item">
                                         <a class="page-scroll" href="/~HCHJ/Permission.php" >切換使用者</a>
-                                    </li>                                                                                                   
+                                    </li>                                                    
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="../logout.php" >登出</a>
+                                    </li>                                                 
                             </div> <!-- navbar collapse -->
                         </nav> <!-- navbar -->
                     </div>
@@ -184,7 +165,7 @@ if ($conn->connect_error) {
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="banner-content">
-                            <h2 class="text-white">新增</h2>
+                            <h2 class="text-white">編輯</h2>
                             <div class="page-breadcrumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
@@ -199,33 +180,84 @@ if ($conn->connect_error) {
             </div>
         </section>
         <!-- ========================= page-banner-section end ========================= -->
-        <section  class="service-section pt-20 pb-10">
-    <div class="form-container">
-        <h2>二技校園</h2>
-        <form action="AddSchool2.php.php" method="post" enctype="multipart/form-data"><br>
-            <label for="location">學校所在區域：</label>
-            <select name="location" id="location" required>
-                <option value="北部">北</option>
-                <option value="中部">中</option>
-                <option value="南部">南部</option>
-                <option value="東部">東部</option>
-                <option value="離島">離島</option>
-            </select><br>
-            <label for="school_name">學校名稱：</label>
-            <input type="text" id="school_name" name="school_name" required><br>
-            <label for="inform">學校資訊：</label>
-            <textarea id="inform" name="inform" rows="3" required></textarea><br>
-            <label for="link">學校連結：</label>
-            <input type="text" id="link" name="link" required><br>
-            <label for="image">校徽圖片：</label>
-            <input type="file" id="image" name="image" required><br>
-            <br>
-            <button class='btn btn-success' onclick="return confirm('確定要新增該學校嗎？')">送出</button>
-        </form>
+
+       
+      <!-- ========================= service-section start ========================= -->
+      <body>
+      <section id="service" class="service-section pt-10 pb-5"> 
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-9">
+                <div class="section-title text-center mb-30"> <!-- 調整 margin-bottom -->
+                    <h2>二技學校</h2> <!-- 調整標題底部間距 -->
+                    <!-- 分頁標籤導航 -->
+                    <div class="tab-navigation" style="margin-bottom: 15px;"> <!-- 調整導航間距 -->
+                        <ul class="nav nav-pills justify-content-center" id="schoolTabs" role="tablist">
+                            <?php 
+                            // 生成地區標籤
+                            $regions = ["北部", "中部", "南部", "東部", "離島"];
+                            foreach ($regions as $index => $region) : ?>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link <?= $index === 0 ? 'active' : '' ?>" 
+                                       id="<?= strtolower($region) ?>-tab" 
+                                       data-toggle="tab" 
+                                       href="#<?= strtolower($region) ?>" 
+                                       role="tab" 
+                                       aria-controls="<?= strtolower($region) ?>" 
+                                       aria-selected="<?= $index === 0 ? 'true' : 'false' ?>">
+                                        <?= $region ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div> 
+            </div>         
+        </div>
+
+        <!-- 分頁內容 -->
+        <div class="tab-content" id="schoolTabsContent" style="margin-top: 10px;"> <!-- 調整分頁內容頂部間距 -->
+            <?php 
+            // Displaying schools by region
+            foreach ($regions as $index => $region) :
+                $location_class = strtolower($region); 
+                $filtered_schools = array_filter($schools, function($school) use ($location_class) {
+                    return strtolower($school['location']) === $location_class;
+                });
+            ?>
+                <div class="tab-pane fade <?= $index === 0 ? 'show active' : '' ?>" 
+                     id="<?= strtolower($region) ?>" 
+                     role="tabpanel" 
+                     aria-labelledby="<?= strtolower($region) ?>-tab">
+                    <div class="row justify-content-center mt-3"> <!-- 調整分頁內容行的頂部間距 -->
+                        <div class="col-md-8">
+                            <table class="table table-hover text-center" style="font-size: 1.2em; line-height: 1.4;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40%;">學校名稱</th> 
+                                        <th style="width: 30%;">內容</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($filtered_schools as $index => $school) : ?>
+                                        <tr>
+                                            <td><?= $school['school_name'] ?></td>
+                                            <td>
+                                                <a href="SchoolDepartment1.php?school_id=<?= $school['school_id'] ?>" class="btn btn-info">科系</a>
+                                                <a href="SchoolUpdate1.php?school_id=<?= $school['school_id'] ?>" class="btn btn-success">修改</a>
+                                                <a href="SchoolDelete2.php?school_id=<?= $school['school_id'] ?>" class="btn btn-danger" onclick="return confirm('確定要刪除該學校及其關聯科系資料嗎？')">刪除</a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
-    </div>
-    </div>
-    </div>
+</section>
         <!-- ========================= service-section end ========================= -->
         <!-- ========================= client-logo-section start ========================= -->
         <section class="client-logo-section pt-100">
@@ -253,6 +285,8 @@ if ($conn->connect_error) {
                         <div class="client-logo">
                             <img src="schoolimages/uknnurse.jpg" alt="">
                         </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -265,7 +299,7 @@ if ($conn->connect_error) {
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
-                            <a href="index-04.html" class="logo mb-30"><img src="schoolimages/uknlogo.png" alt="logo"></a>
+                        <a href="index-03.php" class="logo mb-30"><img src="schoolimages/uknlogo.png" alt="logo"></a>
                             <p class="mb-30 footer-desc">©康寧大學資訊管理科製作</p>
                         </div>
                     </div>

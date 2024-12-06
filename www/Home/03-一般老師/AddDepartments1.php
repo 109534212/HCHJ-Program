@@ -26,15 +26,16 @@ if (!isset($_SESSION['user'])) {
 ?>
 
 <!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>新增二技校園</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="zh-Hant">
 
-		<link rel="shortcut icon" type="image/x-icon" href="schoolimages/ukn.png">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>新增學校科系</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="schoolimages/ukn.png">
+
+    <link rel="shortcut icon" type="image/x-icon" href="schoolimages/ukn.png">
         <!-- Place favicon.ico in the root directory -->
 
 		<!-- ========================= CSS here ========================= -->
@@ -44,82 +45,68 @@ if (!isset($_SESSION['user'])) {
 		<link rel="stylesheet" href="assets/css/tiny-slider.css">
 		<link rel="stylesheet" href="assets/css/glightbox.min.css">
 		<link rel="stylesheet" href="assets/css/main.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap-5.0.0-alpha.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
 
-        <style>
-    /* 設定容器和表單樣式 */
-    .form-container {
-        text-align: center;
-        width: 100%;
-        max-width: 500px; /* 設定最大寬度 */
-        margin: 0 auto;
-        padding: 20px;
-    }
+<?php
+$servername = "127.0.0.1";
+$username = "HCHJ";
+$password = "xx435kKHq";
+$dbname = "HCHJ";
 
-    /* 調整標籤樣式 */
-    label {
-        display: block;
-        text-align: left;
-        font-weight: bold;
-        font-size: 1.2em; /* 增加字型大小 */
-        margin-top: 10px;
-    }
-
-    /* 設定 select、input 和 textarea 的樣式與大小 */
-    select, input[type="text"], textarea, input[type="file"], input[type="date"] {
-        width: 100%;
-        max-width: 500px; /* 設定欄位最大寬度 */
-        margin-top: 10px;
-        padding: 8px;
-        font-size: 1em;
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-    }
-
-    /* 設定按鈕樣式 */
-    button {
-        font-size: 1.2em; /* 增加按鈕字型大小 */
-        padding: 10px 20px;
-    }
-</style>
-    </head>
-    <?php
-$servername = "127.0.0.1"; //伺服器ip或本地端localhost
-$username = "HCHJ"; //登入帳號
-$password = "xx435kKHq"; //密碼
-$dbname = "HCHJ"; //資料表名稱
-
-
-//建立連線
+// 建立資料庫連線
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-//確認連線成功或失敗
+// 檢查連線
 if ($conn->connect_error) {
-    die("連線失敗" . $conn->connect_error);
+    die("連線失敗: " . $conn->connect_error);
+}
+
+$school_id = $_GET['school_id'];
+
+// 查詢科系資料
+$sql = "SELECT department_name FROM department";
+$result = $conn->query($sql);
+
+// 查詢該校已選擇的科系
+$existingDepartments = [];
+$checkSql = "SELECT department_name FROM Department WHERE school_id = ?";
+$checkStmt = $conn->prepare($checkSql);
+$checkStmt->bind_param("s", $school_id);
+$checkStmt->execute();
+$checkResult = $checkStmt->get_result();
+
+while ($row = $checkResult->fetch_assoc()) {
+    $existingDepartments[] = $row['department_name'];
 }
 ?>
 
-    <body>
+    <!-- Header 部分省略，保持不變 -->
 
-        <!-- ========================= preloader start ========================= -->
-            <div class="preloader">
-                <div class="loader">
-                    <div class="ytp-spinner">
-                        <div class="ytp-spinner-container">
-                            <div class="ytp-spinner-rotator">
-                                <div class="ytp-spinner-left">
-                                    <div class="ytp-spinner-circle"></div>
-                                </div>
-                                <div class="ytp-spinner-right">
-                                    <div class="ytp-spinner-circle"></div>
-                                </div>
-                            </div>
+    <!-- ========================= page-banner-section start ========================= -->
+    <section class="page-banner-section pt-75 pb-75 img-bg" style="background-image: url('assets/img/bg/common-bg.svg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="banner-content">
+                        <h2 class="text-white">二技學校</h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index-03.php">首頁</a></li>
+                                    <li class="breadcrumb-item active">二技校園網介紹</li>
+                                </ol>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
-        <!-- preloader end -->
-        <!-- ========================= header start ========================= -->
-        <header class="header navbar-area">
+        </div>
+    </section>
+    <!-- ========================= page-banner-section end ========================= -->
+    <header class="header navbar-area">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-12">
@@ -138,13 +125,13 @@ if ($conn->connect_error) {
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ml-auto">                                    
                                 <li class="nav-item">
-                                    <li class="nav-item"><a href="index-03.php">首頁</a></li>
-                                    </li>
+                                        <a class="page-scroll" href="index-03.php" >首頁</a>
+                                    </li>   
                                     <li class="nav-item">
                                         <a class="nav-item dd-menu">個人資料</a>           
                                         <ul class="sub-menu">
-                                        <li class="nav-item"><a href="contact-03(個人資料).php">查看個人資料</a></li>
-                                        <li class="nav-item"><a href="changepassword-01.html(修改密碼)">修改密碼</a></li>
+                                        <li class="nav-item"><a href="contact02-3.php">查看個人資料</a></li>
+                                        <li class="nav-item"><a href="/~HCHJ/changepassword.html">修改密碼</a></li>
                                         </ul>
                                     </li>       
                                     <li class="nav-item">
@@ -152,15 +139,15 @@ if ($conn->connect_error) {
                                         <ul class="sub-menu">
                                         <li class="nav-item"><a href="Schoolnetwork1.php">首頁</a></li>
                                         <li class="nav-item"><a href="AddSchool1.php">新增校園</a></li>
-                                        <li class="nav-item"><a href="portfolio delete-03(編輯).php">編輯資訊</a></li>
+                                        <li class="nav-item"><a href="SchoolEdit1.php">編輯資訊</a></li>                                        
                                         </ul>
                                     </li>        
                                     <li class="nav-item">
                                         <a class="nav-item dd-menu" >比賽資訊</a>           
                                         <ul class="sub-menu">
-                                        <li class="nav-item"><a href="blog-03(競賽).php">查看</a></li>
-                                            <li class="nav-item"><a href="create-03.php">新增</a></li>
-                                            <li class="nav-item"><a href="delete-03.php">編輯</a></li>
+                                        <li class="nav-item"><a href="Contestblog1.php">查看</a></li>
+                                            <li class="nav-item"><a href="AddContest1.php">新增</a></li>
+                                            <li class="nav-item"><a href="ContestEdin1.php">編輯</a></li>
                                         </ul>
                                     </li>              
                                     <li class="nav-item">
@@ -168,7 +155,10 @@ if ($conn->connect_error) {
                                     </li>              
                                     <li class="nav-item">
                                         <a class="page-scroll" href="/~HCHJ/Permission.php" >切換使用者</a>
-                                    </li>                                                                                                   
+                                    </li>                                                    
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="../logout.php" >登出</a>
+                                    </li>                                                
                             </div> <!-- navbar collapse -->
                         </nav> <!-- navbar -->
                     </div>
@@ -176,57 +166,86 @@ if ($conn->connect_error) {
             </div> <!-- container -->
         
         </header>
-        <!-- ========================= header end ========================= -->
+        <section id="service" class="service-section pt-20 pb-10"> 
+    <div style="text-align:center;width:100%;height:50px;">
+        <div style="width:70%;height:20px;margin:0 auto;">
+            <span class="wow fadeInDown" data-wow-delay=".2s">
+                <h2>新增科系</h2>
+            </span>
+            <br><br>
+            <form action="AddDepartments2.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="school_id" value="<?php echo htmlspecialchars($school_id); ?>">
+                <label for="numChoices">科系數量：</label>
+                <input type="number" id="numChoices" name="numChoices" min="1" max="10" required><br>
+                <div id="selectContainer"></div><br>
+                <button class="btn btn-success" type="submit" onclick="return confirm('確定要新增這些科系嗎？')">送出</button>
+                <br><br>
+                <a href="SchoolDepartment1.php?school_id=<?= $school_id ?>" class="btn btn-secondary">返回上一頁</a>
 
-        <!-- ========================= page-banner-section start ========================= -->
-        <section class="page-banner-section pt-75 pb-75 img-bg" style="background-image: url('assets/img/bg/common-bg.svg')">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="banner-content">
-                            <h2 class="text-white">新增</h2>
-                            <div class="page-breadcrumb">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item" aria-current="page"><a href="index-03.php">首頁</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">二技校園網介紹</li><a href="portfolio-03(二技校園網介紹).php"></a></li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ========================= page-banner-section end ========================= -->
-        <section  class="service-section pt-20 pb-10">
-    <div class="form-container">
-        <h2>二技校園</h2>
-        <form action="AddSchool2.php.php" method="post" enctype="multipart/form-data"><br>
-            <label for="location">學校所在區域：</label>
-            <select name="location" id="location" required>
-                <option value="北部">北</option>
-                <option value="中部">中</option>
-                <option value="南部">南部</option>
-                <option value="東部">東部</option>
-                <option value="離島">離島</option>
-            </select><br>
-            <label for="school_name">學校名稱：</label>
-            <input type="text" id="school_name" name="school_name" required><br>
-            <label for="inform">學校資訊：</label>
-            <textarea id="inform" name="inform" rows="3" required></textarea><br>
-            <label for="link">學校連結：</label>
-            <input type="text" id="link" name="link" required><br>
-            <label for="image">校徽圖片：</label>
-            <input type="file" id="image" name="image" required><br>
-            <br>
-            <button class='btn btn-success' onclick="return confirm('確定要新增該學校嗎？')">送出</button>
-        </form>
+        </div>
     </div>
-    </div>
-    </div>
-    </div>
-        <!-- ========================= service-section end ========================= -->
+</section>
+
+<script>
+    // 監聽 "numChoices" 的輸入事件，當用戶更改科系數量時觸發
+    document.getElementById('numChoices').addEventListener('input', function () {
+        var numChoices = parseInt(this.value); // 取得用戶輸入的科系數量，並轉換為整數
+        if (numChoices > 10) { // 如果科系數量超過 10，顯示警告並限制數量
+            alert("最多只能新增 10 筆科系！"); // 提示用戶
+            this.value = 10; // 將輸入值設為 10
+            numChoices = 10; // 更新 numChoices 變量的值
+        }
+        var selectContainer = document.getElementById('selectContainer'); // 取得下拉選單的容器
+        selectContainer.innerHTML = ''; // 清空容器中的所有內容
+
+        // 根據用戶輸入的數量，動態生成下拉選單
+        for (var i = 1; i <= numChoices; i++) {
+            var label = document.createElement('label'); // 創建標籤元素
+            label.innerHTML = ' 科系 ' + i; // 設置標籤的文字
+
+            var select = document.createElement('select'); // 創建下拉選單
+            select.name = 'choice' + i; // 設定下拉選單的 name 屬性
+            select.className = "form-select mb-3"; // 設置下拉選單的樣式
+
+            <?php
+            // 從資料庫抓取科系選項
+            if ($result->num_rows > 0) {
+                echo 'var options = `<option value="">請選擇科系</option>`;'; // 預設選項
+                while($row = $result->fetch_assoc()) {
+                    $departmentName = htmlspecialchars($row["department_name"]);
+                    // 檢查科系是否已存在，並設置相應的樣式
+                    $disabled = in_array($departmentName, $existingDepartments) ? 'style="background-color: lightgray; color: darkgray;" disabled' : '';
+                    echo 'options += `<option value="' . $departmentName . '" ' . $disabled . '>' . $departmentName . '</option>`;';
+                }
+            } else {
+                echo 'var options = `<option value="">無科系資料</option>`;'; // 無科系資料的選項
+            }
+            ?>
+
+            select.innerHTML = options; // 將生成的選項加入到下拉選單中
+            selectContainer.appendChild(label); // 將標籤加入到容器中
+            selectContainer.appendChild(select); // 將下拉選單加入到容器中
+        }
+    });
+</script>
+
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br>
         <!-- ========================= client-logo-section start ========================= -->
         <section class="client-logo-section pt-100">
             <div class="container">
@@ -253,6 +272,8 @@ if ($conn->connect_error) {
                         <div class="client-logo">
                             <img src="schoolimages/uknnurse.jpg" alt="">
                         </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -265,7 +286,7 @@ if ($conn->connect_error) {
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
-                            <a href="index-04.html" class="logo mb-30"><img src="schoolimages/uknlogo.png" alt="logo"></a>
+                        <a href="index-03.php" class="logo mb-30"><img src="schoolimages/uknlogo.png" alt="logo"></a>
                             <p class="mb-30 footer-desc">©康寧大學資訊管理科製作</p>
                         </div>
                     </div>

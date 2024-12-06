@@ -30,7 +30,7 @@ if (!isset($_SESSION['user'])) {
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>新增二技校園</title>
+        <title>編輯</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -44,60 +44,7 @@ if (!isset($_SESSION['user'])) {
 		<link rel="stylesheet" href="assets/css/tiny-slider.css">
 		<link rel="stylesheet" href="assets/css/glightbox.min.css">
 		<link rel="stylesheet" href="assets/css/main.css">
-
-        <style>
-    /* 設定容器和表單樣式 */
-    .form-container {
-        text-align: center;
-        width: 100%;
-        max-width: 500px; /* 設定最大寬度 */
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    /* 調整標籤樣式 */
-    label {
-        display: block;
-        text-align: left;
-        font-weight: bold;
-        font-size: 1.2em; /* 增加字型大小 */
-        margin-top: 10px;
-    }
-
-    /* 設定 select、input 和 textarea 的樣式與大小 */
-    select, input[type="text"], textarea, input[type="file"], input[type="date"] {
-        width: 100%;
-        max-width: 500px; /* 設定欄位最大寬度 */
-        margin-top: 10px;
-        padding: 8px;
-        font-size: 1em;
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-    }
-
-    /* 設定按鈕樣式 */
-    button {
-        font-size: 1.2em; /* 增加按鈕字型大小 */
-        padding: 10px 20px;
-    }
-</style>
     </head>
-    <?php
-$servername = "127.0.0.1"; //伺服器ip或本地端localhost
-$username = "HCHJ"; //登入帳號
-$password = "xx435kKHq"; //密碼
-$dbname = "HCHJ"; //資料表名稱
-
-
-//建立連線
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-//確認連線成功或失敗
-if ($conn->connect_error) {
-    die("連線失敗" . $conn->connect_error);
-}
-?>
-
     <body>
 
         <!-- ========================= preloader start ========================= -->
@@ -118,6 +65,7 @@ if ($conn->connect_error) {
                 </div>
             </div>
         <!-- preloader end -->
+
         <!-- ========================= header start ========================= -->
         <header class="header navbar-area">
             <div class="container">
@@ -138,13 +86,13 @@ if ($conn->connect_error) {
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ml-auto">                                    
                                 <li class="nav-item">
-                                    <li class="nav-item"><a href="index-03.php">首頁</a></li>
-                                    </li>
+                                        <a class="page-scroll" href="index-03.php" >首頁</a>
+                                    </li>   
                                     <li class="nav-item">
                                         <a class="nav-item dd-menu">個人資料</a>           
                                         <ul class="sub-menu">
-                                        <li class="nav-item"><a href="contact-03(個人資料).php">查看個人資料</a></li>
-                                        <li class="nav-item"><a href="changepassword-01.html(修改密碼)">修改密碼</a></li>
+                                        <li class="nav-item"><a href="contact02-3.php">查看個人資料</a></li>
+                                        <li class="nav-item"><a href="/~HCHJ/changepassword.html">修改密碼</a></li>
                                         </ul>
                                     </li>       
                                     <li class="nav-item">
@@ -152,15 +100,15 @@ if ($conn->connect_error) {
                                         <ul class="sub-menu">
                                         <li class="nav-item"><a href="Schoolnetwork1.php">首頁</a></li>
                                         <li class="nav-item"><a href="AddSchool1.php">新增校園</a></li>
-                                        <li class="nav-item"><a href="portfolio delete-03(編輯).php">編輯資訊</a></li>
+                                        <li class="nav-item"><a href="SchoolEdit1.php">編輯資訊</a></li>                                        
                                         </ul>
                                     </li>        
                                     <li class="nav-item">
                                         <a class="nav-item dd-menu" >比賽資訊</a>           
                                         <ul class="sub-menu">
-                                        <li class="nav-item"><a href="blog-03(競賽).php">查看</a></li>
-                                            <li class="nav-item"><a href="create-03.php">新增</a></li>
-                                            <li class="nav-item"><a href="delete-03.php">編輯</a></li>
+                                        <li class="nav-item"><a href="Contestblog1.php">查看</a></li>
+                                            <li class="nav-item"><a href="AddContest1.php">新增</a></li>
+                                            <li class="nav-item"><a href="ContestEdin1.php">編輯</a></li>
                                         </ul>
                                     </li>              
                                     <li class="nav-item">
@@ -168,7 +116,10 @@ if ($conn->connect_error) {
                                     </li>              
                                     <li class="nav-item">
                                         <a class="page-scroll" href="/~HCHJ/Permission.php" >切換使用者</a>
-                                    </li>                                                                                                   
+                                    </li>                                                    
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="../logout.php" >登出</a>
+                                    </li>                                                
                             </div> <!-- navbar collapse -->
                         </nav> <!-- navbar -->
                     </div>
@@ -184,12 +135,12 @@ if ($conn->connect_error) {
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="banner-content">
-                            <h2 class="text-white">新增</h2>
+                            <h2 class="text-white">編輯</h2>
                             <div class="page-breadcrumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item" aria-current="page"><a href="index-03.php">首頁</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">二技校園網介紹</li><a href="portfolio-03(二技校園網介紹).php"></a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">比賽資訊</li><a href="blog-03(競賽).php"></a></li>
                                     </ol>
                                 </nav>
                             </div>
@@ -199,33 +150,111 @@ if ($conn->connect_error) {
             </div>
         </section>
         <!-- ========================= page-banner-section end ========================= -->
-        <section  class="service-section pt-20 pb-10">
-    <div class="form-container">
-        <h2>二技校園</h2>
-        <form action="AddSchool2.php.php" method="post" enctype="multipart/form-data"><br>
-            <label for="location">學校所在區域：</label>
-            <select name="location" id="location" required>
-                <option value="北部">北</option>
-                <option value="中部">中</option>
-                <option value="南部">南部</option>
-                <option value="東部">東部</option>
-                <option value="離島">離島</option>
-            </select><br>
-            <label for="school_name">學校名稱：</label>
-            <input type="text" id="school_name" name="school_name" required><br>
-            <label for="inform">學校資訊：</label>
-            <textarea id="inform" name="inform" rows="3" required></textarea><br>
-            <label for="link">學校連結：</label>
-            <input type="text" id="link" name="link" required><br>
-            <label for="image">校徽圖片：</label>
-            <input type="file" id="image" name="image" required><br>
-            <br>
-            <button class='btn btn-success' onclick="return confirm('確定要新增該學校嗎？')">送出</button>
-        </form>
+
+        <?php
+$servername = "127.0.0.1"; //伺服器ip或本地端localhost
+$username = "HCHJ"; //登入帳號
+$password = "xx435kKHq"; //密碼
+$dbname = "HCHJ"; //資料表名稱
+
+//建立連線
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+//確認連線成功或失敗
+if ($conn->connect_error) {
+    die("連線失敗" . $conn->connect_error);
+}
+//echo "連線成功";
+// 確定當前頁面，默認為第 1 頁
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; //將 page 參數轉換為整數
+$records_per_page = 10; // 每頁顯示 10 筆資料
+$offset = ($page - 1) * $records_per_page; //參數沒有傳遞（即 isset() 返回 false），則會使用 1 作為預設值，這意味著當用戶沒有指定頁數時，會顯示第 1 頁
+
+// 查詢資料總數
+$sql_total = "SELECT COUNT(*) AS total FROM School";
+$result_total = mysqli_query($conn, $sql_total);
+$row_total = mysqli_fetch_assoc($result_total);
+$total_records = $row_total['total'];
+
+// 設置一個空陣列來放資料
+$sql = "SELECT ID, name FROM information";
+$result = mysqli_query($conn, $sql);
+
+// 準備資料陣列
+$datas = array();
+
+if ($result && mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $datas[] = $row;
+    }
+    mysqli_free_result($result);
+}
+
+// 計算總頁數
+$total_pages = ceil($total_records / $records_per_page);//假設總記錄數是 53 條，每頁顯示 10 條記錄：53 / 10 = 5.3。使用 ceil() 之後，會變成 6，也就是總頁數為 6。
+
+?>
+      <!-- ========================= service-section start ========================= -->
+      <body>
+        
+      <section id="service" class="service-section pt-10 pb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-9">
+                <div class="section-title text-center mb-55">                    
+                    <span class="wow fadeInDown" data-wow-delay=".2s"><h2 style="font-size: 1.4em;">詳細資料</h2></span>
+                </div> 
+            </div>         
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <table class="table table-hover text-center" id="list_table" style="font-size: 1.3em; line-height: 1.5;">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">序號</th>
+                            <th style="width: 40%;">比賽名稱</th>
+                            <th style="width: 20%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($datas as $index => $data) : ?>
+                            <tr>
+                                <td><?= $index + 1 ?></td>
+                                <td><?= $data['name'] ?></td>
+                                <td>
+                                    <a href="Contestupdate1.php?ID=<?= $data['ID'] ?>" class="btn btn-success">修改</a>
+                                    <a href="ContestDelete2.php?pk=<?= $data['ID'] ?>" onclick="return confirm('確定要刪除該比賽資訊嗎？')" class="btn btn-danger">刪除</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <!-- 上一頁按鈕，當前頁為1時禁用 -->
+                        <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <!-- 分頁顯示：動態生成每一頁的頁碼 -->
+                        <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        <!-- 下一頁按鈕，當前頁為最後一頁時禁用 -->
+                        <li class="page-item <?= $page >= $total_pages ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
-    </div>
-    </div>
-    </div>
+</section>
         <!-- ========================= service-section end ========================= -->
         <!-- ========================= client-logo-section start ========================= -->
         <section class="client-logo-section pt-100">
@@ -253,6 +282,8 @@ if ($conn->connect_error) {
                         <div class="client-logo">
                             <img src="schoolimages/uknnurse.jpg" alt="">
                         </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -265,7 +296,7 @@ if ($conn->connect_error) {
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
-                            <a href="index-04.html" class="logo mb-30"><img src="schoolimages/uknlogo.png" alt="logo"></a>
+                        <a href="index-03.php" class="logo mb-30"><img src="schoolimages/uknlogo.png" alt="logo"></a>
                             <p class="mb-30 footer-desc">©康寧大學資訊管理科製作</p>
                         </div>
                     </div>

@@ -30,7 +30,7 @@ if (!isset($_SESSION['user'])) {
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>新增二技校園</title>
+        <title>比賽資訊</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -43,62 +43,154 @@ if (!isset($_SESSION['user'])) {
 		<link rel="stylesheet" href="assets/css/animate.css">
 		<link rel="stylesheet" href="assets/css/tiny-slider.css">
 		<link rel="stylesheet" href="assets/css/glightbox.min.css">
-		<link rel="stylesheet" href="assets/css/main.css">
+        <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css" rel="stylesheet" />
+       
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction/main.js"></script>
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js"></script>
+    <script>
 
-        <style>
-    /* 設定容器和表單樣式 */
-    .form-container {
-        text-align: center;
-        width: 100%;
-        max-width: 500px; /* 設定最大寬度 */
-        margin: 0 auto;
-        padding: 20px;
-    }
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
 
-    /* 調整標籤樣式 */
-    label {
-        display: block;
-        text-align: left;
-        font-weight: bold;
-        font-size: 1.2em; /* 增加字型大小 */
-        margin-top: 10px;
-    }
+    </script>
+        <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Inline CSS for simplicity */
+        .portfolio-section {
+            padding-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    /* 設定 select、input 和 textarea 的樣式與大小 */
-    select, input[type="text"], textarea, input[type="file"], input[type="date"] {
-        width: 100%;
-        max-width: 500px; /* 設定欄位最大寬度 */
-        margin-top: 10px;
-        padding: 8px;
-        font-size: 1em;
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-    }
+        .portfolio-item-wrapper {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+            max-width: 600px;  /* 控制卡片寬度 */
+            margin: 10px auto; /* 讓卡片居中，每個卡片之間有間距 */
+        }
 
-    /* 設定按鈕樣式 */
-    button {
-        font-size: 1.2em; /* 增加按鈕字型大小 */
-        padding: 10px 20px;
-    }
-</style>
-    </head>
-    <?php
-$servername = "127.0.0.1"; //伺服器ip或本地端localhost
-$username = "HCHJ"; //登入帳號
-$password = "xx435kKHq"; //密碼
-$dbname = "HCHJ"; //資料表名稱
+        .portfolio-item-wrapper:hover {
+            transform: translateY(-3px);
+        }
 
+        .portfolio-img img {
+            width: 100%;  /* 縮小圖片寬度 */
+            height: auto;
+            border-radius: 4px;
+        }
 
-//建立連線
+        .portfolio-content {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .portfolio-content h5 {
+            font-size: 1.2rem;  /* 調小標題字體大小 */
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .portfolio-content .small-text {
+            font-size: 0.9rem;  /* 調小描述文字大小 */
+            color: #555;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .theme-btn {
+            font-size: 0.85rem;  /* 按鈕字體變小 */
+            padding: 6px 12px;   /* 調整按鈕的內邊距 */
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 4px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .theme-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<?php
+// 資料庫連接設置
+$servername = "127.0.0.1";
+$username = "HCHJ";
+$password = "xx435kKHq";
+$dbname = "HCHJ";
+
+// 建立資料庫連線
 $conn = new mysqli($servername, $username, $password, $dbname);
-
-//確認連線成功或失敗
 if ($conn->connect_error) {
-    die("連線失敗" . $conn->connect_error);
+    die("連線失敗: " . $conn->connect_error);
 }
-?>
 
+// 設定時區
+date_default_timezone_set('Asia/Taipei');
+$currentDate = date('Y-m-d');  // 獲取當前日期
+// 查詢未過期的比賽資訊
+$sql = "SELECT name, inform, link, image FROM information WHERE display_end_time >= ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $currentDate);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// 檢查是否有資料
+$competitions = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $competitions[] = $row;
+    }
+} else {
+    echo "目前沒有未過期的比賽資訊。";
+}
+
+// 取得當前年份和月份
+$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+$month = isset($_GET['month']) ? $_GET['month'] : date('m');
+
+// 計算這個月的第一天是星期幾
+$firstDayOfMonth = strtotime("$year-$month-01");
+$firstDayOfWeek = date('w', $firstDayOfMonth); // 0 (星期天) 到 6 (星期六)
+
+// 計算當月的總天數
+$totalDaysInMonth = date('t', $firstDayOfMonth);
+
+// 計算上一個月和下一個月
+$prevMonth = date('m', strtotime("-1 month", strtotime("$year-$month-01")));
+$prevYear = date('Y', strtotime("-1 month", strtotime("$year-$month-01")));
+$nextMonth = date('m', strtotime("+1 month", strtotime("$year-$month-01")));
+$nextYear = date('Y', strtotime("+1 month", strtotime("$year-$month-01")));
+
+// 取得今天的日期
+$today = date('Y-m-d');
+// 關閉資料庫連線
+$conn->close();
+?>
     <body>
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
 
         <!-- ========================= preloader start ========================= -->
             <div class="preloader">
@@ -118,6 +210,7 @@ if ($conn->connect_error) {
                 </div>
             </div>
         <!-- preloader end -->
+
         <!-- ========================= header start ========================= -->
         <header class="header navbar-area">
             <div class="container">
@@ -138,13 +231,13 @@ if ($conn->connect_error) {
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ml-auto">                                    
                                 <li class="nav-item">
-                                    <li class="nav-item"><a href="index-03.php">首頁</a></li>
-                                    </li>
+                                        <a class="page-scroll" href="index-03.php" >首頁</a>
+                                    </li>   
                                     <li class="nav-item">
                                         <a class="nav-item dd-menu">個人資料</a>           
                                         <ul class="sub-menu">
-                                        <li class="nav-item"><a href="contact-03(個人資料).php">查看個人資料</a></li>
-                                        <li class="nav-item"><a href="changepassword-01.html(修改密碼)">修改密碼</a></li>
+                                        <li class="nav-item"><a href="contact02-3.php">查看個人資料</a></li>
+                                        <li class="nav-item"><a href="/~HCHJ/changepassword.html">修改密碼</a></li>
                                         </ul>
                                     </li>       
                                     <li class="nav-item">
@@ -152,15 +245,15 @@ if ($conn->connect_error) {
                                         <ul class="sub-menu">
                                         <li class="nav-item"><a href="Schoolnetwork1.php">首頁</a></li>
                                         <li class="nav-item"><a href="AddSchool1.php">新增校園</a></li>
-                                        <li class="nav-item"><a href="portfolio delete-03(編輯).php">編輯資訊</a></li>
+                                        <li class="nav-item"><a href="SchoolEdit1.php">編輯資訊</a></li>                                        
                                         </ul>
                                     </li>        
                                     <li class="nav-item">
                                         <a class="nav-item dd-menu" >比賽資訊</a>           
                                         <ul class="sub-menu">
-                                        <li class="nav-item"><a href="blog-03(競賽).php">查看</a></li>
-                                            <li class="nav-item"><a href="create-03.php">新增</a></li>
-                                            <li class="nav-item"><a href="delete-03.php">編輯</a></li>
+                                        <li class="nav-item"><a href="Contestblog1.php">查看</a></li>
+                                            <li class="nav-item"><a href="AddContest1.php">新增</a></li>
+                                            <li class="nav-item"><a href="ContestEdin1.php">編輯</a></li>
                                         </ul>
                                     </li>              
                                     <li class="nav-item">
@@ -168,7 +261,10 @@ if ($conn->connect_error) {
                                     </li>              
                                     <li class="nav-item">
                                         <a class="page-scroll" href="/~HCHJ/Permission.php" >切換使用者</a>
-                                    </li>                                                                                                   
+                                    </li>                                                    
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="../logout.php" >登出</a>
+                                    </li>                                               
                             </div> <!-- navbar collapse -->
                         </nav> <!-- navbar -->
                     </div>
@@ -184,13 +280,9 @@ if ($conn->connect_error) {
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="banner-content">
-                            <h2 class="text-white">新增</h2>
+                            <h2 class="text-white">比賽資訊</h2>
                             <div class="page-breadcrumb">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item" aria-current="page"><a href="index-03.php">首頁</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">二技校園網介紹</li><a href="portfolio-03(二技校園網介紹).php"></a></li>
-                                    </ol>
+                                <nav aria-label="breadcrumb">                                    
                                 </nav>
                             </div>
                         </div>
@@ -199,34 +291,84 @@ if ($conn->connect_error) {
             </div>
         </section>
         <!-- ========================= page-banner-section end ========================= -->
-        <section  class="service-section pt-20 pb-10">
-    <div class="form-container">
-        <h2>二技校園</h2>
-        <form action="AddSchool2.php.php" method="post" enctype="multipart/form-data"><br>
-            <label for="location">學校所在區域：</label>
-            <select name="location" id="location" required>
-                <option value="北部">北</option>
-                <option value="中部">中</option>
-                <option value="南部">南部</option>
-                <option value="東部">東部</option>
-                <option value="離島">離島</option>
-            </select><br>
-            <label for="school_name">學校名稱：</label>
-            <input type="text" id="school_name" name="school_name" required><br>
-            <label for="inform">學校資訊：</label>
-            <textarea id="inform" name="inform" rows="3" required></textarea><br>
-            <label for="link">學校連結：</label>
-            <input type="text" id="link" name="link" required><br>
-            <label for="image">校徽圖片：</label>
-            <input type="file" id="image" name="image" required><br>
-            <br>
-            <button class='btn btn-success' onclick="return confirm('確定要新增該學校嗎？')">送出</button>
-        </form>
+       
+        <!-- ========================= blog-section end ========================= -->
+        <section class="blog-section pt-130">
+    <div class="container">
+        <div class="row">
+            <!-- Blog Content -->
+            <div class="col-xl-8 col-lg-7">
+                <div class="left-side-wrapper">
+                    <div class="single-blog blog-style-2 mb-60 wow fadeInUp" data-wow-delay=".2s">
+                            <section class="portfolio-section pt-130">
+                                <div class="container">
+                                    <div class="row">
+                                        <?php foreach ($competitions as $competition): ?>
+                                            <div class="col-12 mb-4">
+                                                <div class="portfolio-item-wrapper">
+                                                    <div class="portfolio-img">
+                                                        <img src="data:image/jpeg;base64,<?= base64_encode($competition['image']) ?>" alt="<?= htmlspecialchars($competition['name']) ?>" class="img-fluid">
+                                                    </div>
+                                                    <div class="portfolio-content mt-2">
+                                                        <h5><?= htmlspecialchars($competition['name']) ?></h5>
+                                                        <p class="small-text"><?= htmlspecialchars($competition['inform']) ?></p>
+                                                        <a href="<?= htmlspecialchars($competition['link']) ?>" class="theme-btn border-btn" target="_blank">查看詳細資料</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            
+
+            <!-- Sidebar -->
+            <div class="col-xl-4 col-lg-5">
+    <div class="sidebar-wrapper">
+        <!-- 搜索表單 -->
+        <div class="sidebar-box search-form-box mb-30">
+            <form action="Contestsearch1.php" method="GET" class="search-form">
+            <input type="text" placeholder="Search..." name="keyword" required>
+                <button type="submit"><i class="lni lni-search-alt"></i>搜尋</button>
+            </form>
+        </div>
+        <style>
+            #calendar {
+                max-width: 100%;   /* 設定為最大寬度，這樣它會根據容器大小自動調整 */
+                width: 100%;       /* 設定為 100%，使其自動適應容器寬度 */
+                height: 500px;     /* 設定固定高度，也可以根據需求進行調整 */
+                margin: 0 auto;    /* 使日曆水平居中 */
+            }
+        </style>
+            <!-- 當月日曆 -->
+            <div class="sidebar-box recent-blog-box mb-100">
+            <div id="calendar"></div>
+            <!-- 小月曆樣式 -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var calendarEl = document.getElementById('calendar');  // 選擇 id 為 calendar 的 div 元素
+
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',  // 設定預設視圖為月份視圖
+                        locale: 'zh-tw',  // 設定語言為中文
+                    });
+
+                    calendar.render();  // 渲染日曆
+                });
+            </script>
+                    </div>
+                </div>
+            </div>
     </div>
+</div>
+        </div>
     </div>
-    </div>
-    </div>
-        <!-- ========================= service-section end ========================= -->
+</section>
+        <!-- ========================= blog-section end ========================= -->
+
         <!-- ========================= client-logo-section start ========================= -->
         <section class="client-logo-section pt-100">
             <div class="container">
@@ -253,6 +395,8 @@ if ($conn->connect_error) {
                         <div class="client-logo">
                             <img src="schoolimages/uknnurse.jpg" alt="">
                         </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -265,7 +409,7 @@ if ($conn->connect_error) {
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
-                            <a href="index-04.html" class="logo mb-30"><img src="schoolimages/uknlogo.png" alt="logo"></a>
+                        <a href="index-03.php" class="logo mb-30"><img src="schoolimages/uknlogo.png" alt="logo"></a>
                             <p class="mb-30 footer-desc">©康寧大學資訊管理科製作</p>
                         </div>
                     </div>

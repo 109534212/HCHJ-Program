@@ -30,7 +30,7 @@ if (!isset($_SESSION['user'])) {
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>新增二技校園</title>
+        <title>修改資料</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -44,60 +44,7 @@ if (!isset($_SESSION['user'])) {
 		<link rel="stylesheet" href="assets/css/tiny-slider.css">
 		<link rel="stylesheet" href="assets/css/glightbox.min.css">
 		<link rel="stylesheet" href="assets/css/main.css">
-
-        <style>
-    /* 設定容器和表單樣式 */
-    .form-container {
-        text-align: center;
-        width: 100%;
-        max-width: 500px; /* 設定最大寬度 */
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    /* 調整標籤樣式 */
-    label {
-        display: block;
-        text-align: left;
-        font-weight: bold;
-        font-size: 1.2em; /* 增加字型大小 */
-        margin-top: 10px;
-    }
-
-    /* 設定 select、input 和 textarea 的樣式與大小 */
-    select, input[type="text"], textarea, input[type="file"], input[type="date"] {
-        width: 100%;
-        max-width: 500px; /* 設定欄位最大寬度 */
-        margin-top: 10px;
-        padding: 8px;
-        font-size: 1em;
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-    }
-
-    /* 設定按鈕樣式 */
-    button {
-        font-size: 1.2em; /* 增加按鈕字型大小 */
-        padding: 10px 20px;
-    }
-</style>
     </head>
-    <?php
-$servername = "127.0.0.1"; //伺服器ip或本地端localhost
-$username = "HCHJ"; //登入帳號
-$password = "xx435kKHq"; //密碼
-$dbname = "HCHJ"; //資料表名稱
-
-
-//建立連線
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-//確認連線成功或失敗
-if ($conn->connect_error) {
-    die("連線失敗" . $conn->connect_error);
-}
-?>
-
     <body>
 
         <!-- ========================= preloader start ========================= -->
@@ -118,6 +65,7 @@ if ($conn->connect_error) {
                 </div>
             </div>
         <!-- preloader end -->
+
         <!-- ========================= header start ========================= -->
         <header class="header navbar-area">
             <div class="container">
@@ -138,13 +86,13 @@ if ($conn->connect_error) {
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ml-auto">                                    
                                 <li class="nav-item">
-                                    <li class="nav-item"><a href="index-03.php">首頁</a></li>
-                                    </li>
+                                        <a class="page-scroll" href="index-03.php" >首頁</a>
+                                    </li>   
                                     <li class="nav-item">
                                         <a class="nav-item dd-menu">個人資料</a>           
                                         <ul class="sub-menu">
-                                        <li class="nav-item"><a href="contact-03(個人資料).php">查看個人資料</a></li>
-                                        <li class="nav-item"><a href="changepassword-01.html(修改密碼)">修改密碼</a></li>
+                                        <li class="nav-item"><a href="contact02-3.php">查看個人資料</a></li>
+                                        <li class="nav-item"><a href="/~HCHJ/changepassword.html">修改密碼</a></li>
                                         </ul>
                                     </li>       
                                     <li class="nav-item">
@@ -152,15 +100,15 @@ if ($conn->connect_error) {
                                         <ul class="sub-menu">
                                         <li class="nav-item"><a href="Schoolnetwork1.php">首頁</a></li>
                                         <li class="nav-item"><a href="AddSchool1.php">新增校園</a></li>
-                                        <li class="nav-item"><a href="portfolio delete-03(編輯).php">編輯資訊</a></li>
+                                        <li class="nav-item"><a href="SchoolEdit1.php">編輯資訊</a></li>                                        
                                         </ul>
                                     </li>        
                                     <li class="nav-item">
                                         <a class="nav-item dd-menu" >比賽資訊</a>           
                                         <ul class="sub-menu">
-                                        <li class="nav-item"><a href="blog-03(競賽).php">查看</a></li>
-                                            <li class="nav-item"><a href="create-03.php">新增</a></li>
-                                            <li class="nav-item"><a href="delete-03.php">編輯</a></li>
+                                        <li class="nav-item"><a href="Contestblog1.php">查看</a></li>
+                                            <li class="nav-item"><a href="AddContest1.php">新增</a></li>
+                                            <li class="nav-item"><a href="ContestEdin1.php">編輯</a></li>
                                         </ul>
                                     </li>              
                                     <li class="nav-item">
@@ -168,7 +116,10 @@ if ($conn->connect_error) {
                                     </li>              
                                     <li class="nav-item">
                                         <a class="page-scroll" href="/~HCHJ/Permission.php" >切換使用者</a>
-                                    </li>                                                                                                   
+                                    </li>                                                    
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="../logout.php" >登出</a>
+                                    </li>                                              
                             </div> <!-- navbar collapse -->
                         </nav> <!-- navbar -->
                     </div>
@@ -184,12 +135,12 @@ if ($conn->connect_error) {
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="banner-content">
-                            <h2 class="text-white">新增</h2>
+                            <h2 class="text-white">修改</h2>
                             <div class="page-breadcrumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item" aria-current="page"><a href="index-03.php">首頁</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">二技校園網介紹</li><a href="portfolio-03(二技校園網介紹).php"></a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">二技學校</li><a href="blog-03(競賽).php"></a></li>
                                     </ol>
                                 </nav>
                             </div>
@@ -199,34 +150,100 @@ if ($conn->connect_error) {
             </div>
         </section>
         <!-- ========================= page-banner-section end ========================= -->
-        <section  class="service-section pt-20 pb-10">
-    <div class="form-container">
-        <h2>二技校園</h2>
-        <form action="AddSchool2.php.php" method="post" enctype="multipart/form-data"><br>
-            <label for="location">學校所在區域：</label>
-            <select name="location" id="location" required>
-                <option value="北部">北</option>
-                <option value="中部">中</option>
-                <option value="南部">南部</option>
-                <option value="東部">東部</option>
-                <option value="離島">離島</option>
-            </select><br>
-            <label for="school_name">學校名稱：</label>
-            <input type="text" id="school_name" name="school_name" required><br>
-            <label for="inform">學校資訊：</label>
-            <textarea id="inform" name="inform" rows="3" required></textarea><br>
-            <label for="link">學校連結：</label>
-            <input type="text" id="link" name="link" required><br>
-            <label for="image">校徽圖片：</label>
-            <input type="file" id="image" name="image" required><br>
-            <br>
-            <button class='btn btn-success' onclick="return confirm('確定要新增該學校嗎？')">送出</button>
-        </form>
+
+        <?php
+$servername = "127.0.0.1"; //伺服器ip或本地端localhost
+$username = "HCHJ"; //登入帳號
+$password = "xx435kKHq"; //密碼
+$dbname = "HCHJ"; //資料表名稱
+
+//建立連線
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+//確認連線成功或失敗
+if ($conn->connect_error) {
+    die("連線失敗" . $conn->connect_error);
+}
+//echo "連線成功";
+
+$adm_pk=$_GET['school_id'];
+//echo $adm_pk;
+// 設置一個空陣列來放資料
+$datas = array();
+
+$sql = "SELECT * FROM School WHERE school_id='".$adm_pk."'"; // sql語法存在變數中
+//$sql = "SELECT ID, name, inform, link FROM information";// sql語法存在變數中
+//$sql = "UPDATE `information` SET `name` = '457', `inform` = '4567', `link` = '4567', `image_path` = '4567' WHERE `information`.`ID` = 68";
+//$sql = "SELECT ID, name, inform, link FROM information WHERE ID='".$adm_pk."'";// sql語法存在變數中
+
+$result = mysqli_query($conn, $sql); // 用mysqli_query方法執行(sql語法)將結果存在變數中
+
+// 如果有資料
+if ($result) {
+    // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
+    if (mysqli_num_rows($result) > 0) {
+        // 取得大於0代表有資料
+        // while迴圈會根據資料數量，決定跑的次數
+        // mysqli_fetch_assoc方法可取得一筆值
+        while ($row = mysqli_fetch_assoc($result)) {
+            // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+            $datas[] = $row;
+        }
+    }
+    // 釋放資料庫查到的記憶體
+    mysqli_free_result($result);
+} else {
+    echo "{$sql} 語法執行失敗，錯誤訊息: " . mysqli_error($link);
+}
+// 處理完後印出資料
+if (!empty($result)) {
+    // 如果結果不為空，就利用print_r方法印出資料
+    // print_r($datas);
+    //echo($datas[0]['adm_name']);
+} else {
+    // 為空表示沒資料
+    echo "查無資料";
+}
+echo "<br><br>";
+//echo $datas[0]['sf_name']; // 印出第0筆資料中的sf_name欄位值
+
+//使用表格排版用while印出
+$datas_len = count($datas); //目前資料筆數
+
+?>
+      <!-- ========================= service-section start ========================= -->
+      <body>        
+    <div style="text-align:center;width:100%;height:50px;">
+        　<div style="width:30%;height:10px;margin:0 auto;">
+        <h2 class="margin_top50">二技校園</h2><br>
+            <form method="post" action="SchoolUpdate2.php?school_id=<?php echo $datas[0]['school_id']?>">
+                學校名稱：<input type="text" class="form-control" value="<?php echo $datas[0]['school_name'] ?>" name="school_name"><br>
+                地區：<input type="text" class="form-control" value="<?php echo $datas[0]['location'] ?>" name="location"><br>
+                學校資訊： <textarea class="form-control" name="inform" rows="5"><?php echo $datas[0]['inform'] ?></textarea><br>
+                連結：<input type="text" class="form-control" value="<?php echo $datas[0]['link'] ?>" name="link"><br>
+                <input type="submit" class="form-control btn btn-primary" onclick="return confirm('確定要修改該學校相關資料嗎？')" value="修改">
+                
+            </form>
+        </div>
     </div>
     </div>
     </div>
+</body>
+        </div>
     </div>
-        <!-- ========================= service-section end ========================= -->
+</section>
+<!-- ========================= service-section end ========================= -->
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br>
         <!-- ========================= client-logo-section start ========================= -->
         <section class="client-logo-section pt-100">
             <div class="container">
@@ -253,6 +270,8 @@ if ($conn->connect_error) {
                         <div class="client-logo">
                             <img src="schoolimages/uknnurse.jpg" alt="">
                         </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -265,7 +284,7 @@ if ($conn->connect_error) {
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
-                            <a href="index-04.html" class="logo mb-30"><img src="schoolimages/uknlogo.png" alt="logo"></a>
+                        <a href="index-03.php" class="logo mb-30"><img src="schoolimages/uknlogo.png" alt="logo"></a>
                             <p class="mb-30 footer-desc">©康寧大學資訊管理科製作</p>
                         </div>
                     </div>
